@@ -4,12 +4,55 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.whu.info.campus.Campus;
 import org.whu.info.dbutil.DBUtil;
-import org.whu.info.student.Student;
 
+/**
+ * 校区表操作类
+ * 
+ * @author bobo
+ *
+ */
 public class CampusDao {
+
+	/**
+	 * 获取校区列表
+	 * 
+	 * @return
+	 */
+	public List<Campus> getAllCampus() {
+		List<Campus> allCampusList = new ArrayList<Campus>();
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from Campus ";
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			while (rst.next()) {
+				Campus campus = new Campus();
+				fillRsCampus(rst, campus);
+				allCampusList.add(campus);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allCampusList;
+	}
+
+	public void fillRsCampus(ResultSet rst, Campus c) {
+		try {
+			c.setVille(rst.getString("ville"));
+			c.setRegion(rst.getString("region"));
+			c.setCapacite(rst.getInt("capacite"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 增加一个campus
 	 */
@@ -18,7 +61,7 @@ public class CampusDao {
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
 		String sql = "insert into campus(ville,region,capacite) values('%s','%s',%d)";
-		sql = String.format(sql,c.getVille(), c.getRegion(),c.getCapacite());
+		sql = String.format(sql, c.getVille(), c.getRegion(), c.getCapacite());
 		System.out.println(sql);
 		try {
 			stmt.execute(sql);
@@ -31,8 +74,10 @@ public class CampusDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 根据省市判断campus是否存在
+	 * 
 	 * @param c
 	 */
 	public boolean checkCampus(Campus c) {
@@ -40,7 +85,7 @@ public class CampusDao {
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
 		String sql = "select * from campus where ville='%s' and region='%s'";
-		sql = String.format(sql, c.getVille(),c.getRegion());
+		sql = String.format(sql, c.getVille(), c.getRegion());
 		System.out.println(sql);
 		ResultSet rst = DBUtil.getRs(stmt, sql);
 		try {
@@ -57,10 +102,13 @@ public class CampusDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 查询campus容量操作
+	 * 
 	 * @param ville
 	 * @param region
+	 * @return
 	 */
 	public int getCampusCapacite(String ville, String region) {
 		int res = -1;
@@ -86,14 +134,19 @@ public class CampusDao {
 
 	/**
 	 * 更新一个校区学生容量
+	 * 
 	 * @param c
+	 * @return
 	 */
-	public boolean updateCampusCapacite(Campus c) {
+	public boolean updateCampusCapacite(String ville, String region,
+			int capacite) {
 		boolean res = true;
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "update campus set capacite=%d where ville='%s' and region='%s'";
-		sql = String.format(sql, c.getCapacite(), c.getVille(), c.getRegion());
+		String sql = "update campus set capacite= " + capacite
+				+ " where ville='" + ville + "'" + " and region=" + "'"
+				+ region + "'";
+		System.out.println(sql);
 		try {
 			stmt.execute(sql);
 		} catch (SQLException e) {
@@ -107,20 +160,9 @@ public class CampusDao {
 	}
 
 	public static void main(String args[]) {
-		Student s = new Student();
-		Campus c = new Campus();
-		c.setVille("11");
-		c.setRegion("22");
-		c.setCapacite(49);
-		c.setCapacite(c.getCapacite() - 1);
-		s.setID(1);
-		s.setPrenom("傅");
-		s.setNom("慧");
-		s.setVille("11");
-		s.setRegion("22");
 		CampusDao campusDao = new CampusDao();
-		campusDao.updateCampusCapacite(c);
-		// campusDao.addStudent(s);
-		System.out.println(campusDao.getCampusCapacite("11", "22"));
+		List<Campus> c = new ArrayList<Campus>();
+		c = campusDao.getAllCampus();
+		System.out.println(c.size());
 	}
 }

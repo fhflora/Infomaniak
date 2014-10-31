@@ -10,7 +10,13 @@ import java.util.List;
 import org.whu.info.dbutil.DBUtil;
 import org.whu.info.teacher.ExternalTeacher;
 import org.whu.info.teacher.InternalTeacher;
+import org.whu.info.teacher.Teacher;
 
+/**
+ * 教师表操作类
+ * @author bobo
+ *
+ */
 public class TeacherDao {
 	/**
 	 * 添加内部教师到数据表
@@ -63,14 +69,15 @@ public class TeacherDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 通过教师ID 删除教师
 	 */
-	public boolean removeTeacher(int ID){
-		boolean res=false;
+	public boolean removeTeacher(int ID) {
+		boolean res = false;
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "delete from teacher where tea_ID=ID ";
+		String sql = "delete from teacher where tea_ID=" + ID;
 		System.out.println(sql);
 		try {
 			stmt.execute(sql);
@@ -82,6 +89,7 @@ public class TeacherDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 修改内部教师工资
 	 * 
@@ -106,8 +114,10 @@ public class TeacherDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 获得内部教师列表
+	 * 
 	 * @param args
 	 */
 	public List<InternalTeacher> getInternalTeachers() {
@@ -128,18 +138,50 @@ public class TeacherDao {
 		}
 		return TeachersList;
 	}
+
 	public void fillInternalTeacher(ResultSet rst, InternalTeacher t) {
 		try {
 			t.setID(rst.getInt("tea_ID"));
 			t.setPrenom(rst.getString("prenom"));
 			t.setNom(rst.getString("nom"));
-			InternalTeacher.salary=rst.getInt("salary");
+			InternalTeacher.salary = rst.getInt("salary");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * 获取全部教师列表
+	 * 
+	 * @return
+	 */
+	public List<Teacher> getTeachers() {
+		List<Teacher> TeachersList = new ArrayList<Teacher>();
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from teacher ";
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			while (rst.next()) {
+				if (rst.getInt("flag") == 0) {
+					InternalTeacher t = new InternalTeacher();
+					fillInternalTeacher(rst, t);
+					TeachersList.add(t);
+				} else {
+					ExternalTeacher t = new ExternalTeacher();
+					fillExternalTeacher(rst, t);
+					TeachersList.add(t);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return TeachersList;
+	}
+
 	/**
 	 * 获得外部教师列表
+	 * 
 	 * @param args
 	 */
 	public List<ExternalTeacher> getExternalTeachers() {
@@ -160,6 +202,7 @@ public class TeacherDao {
 		}
 		return TeachersList;
 	}
+
 	public void fillExternalTeacher(ResultSet rst, ExternalTeacher t) {
 		try {
 			t.setID(rst.getInt("tea_ID"));
@@ -170,17 +213,33 @@ public class TeacherDao {
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
-		InternalTeacher t = new InternalTeacher();
-		t.setID(2);
-		t.setPrenom("11");
-		t.setNom("33");
-		TeacherDao tt = new TeacherDao();
-		ExternalTeacher e = new ExternalTeacher();
-		e.setID(3);
-		e.setNom("22");
-		e.setPrenom("44");
-		e.setSalary(50000);
-		tt.addTeacher(e);
+
+	/**
+	 * 查询教师是否存在
+	 * 
+	 * @param t
+	 * @return
+	 */
+	public boolean checkTeacherID(Teacher t) {
+		boolean res = false;
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from teacher where tea_ID=%d";
+		sql = String.format(sql, t.getID());
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			if (rst.next()) {
+				res = true;
+			}
+		} catch (SQLException e) {
+			res = false;
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeStmt(stmt);
+			DBUtil.closeConn(conn);
+			DBUtil.closeRs(rst);
+		}
+		return res;
 	}
 }

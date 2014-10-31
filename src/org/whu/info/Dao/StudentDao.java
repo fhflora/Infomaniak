@@ -7,10 +7,44 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.whu.info.campus.Campus;
 import org.whu.info.dbutil.DBUtil;
 import org.whu.info.student.Student;
 
+/**
+ * 学生表操作类
+ * 
+ * @author bobo
+ *
+ */
 public class StudentDao {
+
+	/**
+	 * 获取每个校区学生列表
+	 * 
+	 * @return
+	 */
+	public List<Student> getCampusStudent(Campus c) {
+		List<Student> allStudentList = new ArrayList<Student>();
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from student where ville='%s' and  region='%s' order by stu_ID ";
+		sql = String.format(sql, c.getVille(), c.getRegion());
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			while (rst.next()) {
+				Student student = new Student();
+				fillRsStudent(rst, student);
+				allStudentList.add(student);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allStudentList;
+	}
+
 	/**
 	 * 取表学生列表
 	 * 
@@ -35,17 +69,7 @@ public class StudentDao {
 		}
 		return allStudentList;
 	}
-	public void fillRsStudent(ResultSet rst, Student s) {
-		try {
-			s.setID(rst.getInt("stu_ID"));
-			s.setPrenom(rst.getString("prenom"));
-			s.setNom(rst.getString("nom"));
-			s.setVille(rst.getString("ville"));
-			s.setRegion(rst.getString("region"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
 	/**
 	 * 查询表中ID判断是否存在
 	 * 
@@ -74,9 +98,24 @@ public class StudentDao {
 		}
 		return res;
 	}
+
+	public void fillRsStudent(ResultSet rst, Student s) {
+		try {
+			s.setID(rst.getInt("stu_ID"));
+			s.setPrenom(rst.getString("prenom"));
+			s.setNom(rst.getString("nom"));
+			s.setVille(rst.getString("ville"));
+			s.setRegion(rst.getString("region"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * 根据姓名判断是否存在
+	 * 
 	 * @param s
+	 * @return
 	 */
 	public boolean checkStudentName(Student s) {
 		boolean res = false;
@@ -100,9 +139,12 @@ public class StudentDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 添加一条学生记录
+	 * 
 	 * @param s
+	 * @return
 	 */
 	public int addStudent(Student s) {
 		int res = -1;
@@ -123,9 +165,12 @@ public class StudentDao {
 		}
 		return res;
 	}
+
 	/**
 	 * 根据姓名删除学生
+	 * 
 	 * @param s
+	 * @return
 	 */
 	public boolean removeStudent(Student s) {
 		boolean res = false;
@@ -146,21 +191,12 @@ public class StudentDao {
 	}
 
 	public static void main(String[] args) {
-		Student s = new Student();
-		s.setID(1);
-		s.setNom("12");
-		s.setPrenom("33");
-		s.setRegion("33");
-		s.setRegion("44");
-		s.setVille("55");
 		StudentDao studentDao = new StudentDao();
-		// System.out.println(studentDao.checkStudentName(s));
-		// studentDao.removeStudent(s);
-		List<Student> allList = new ArrayList<Student>();
-		allList = studentDao.getAllStudent();
-		for (int i = 0; i < allList.size(); i++) {
-			System.out.println(allList.get(i).getID() + " "
-					+ allList.get(i).getPrenom());
-		}
+		Campus c = new Campus();
+		c.setVille("11");
+		c.setRegion("22");
+		List<Student> s = new ArrayList<Student>();
+		s = studentDao.getCampusStudent(c);
+		System.out.println(s.get(0).getPrenom() + " " + s.get(0).getNom());
 	}
 }

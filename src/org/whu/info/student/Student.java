@@ -7,6 +7,16 @@ public class Student {
 	private String ville;
 	private String region;
 
+	public Student(){}
+	public Student(int ID, String prenom, String nom, String ville,
+			String region) {
+		this.ID = ID;
+		this.prenom = prenom;
+		this.nom = nom;
+		this.ville = ville;
+		this.region = region;
+	}
+
 	public String getVille() {
 		return ville;
 	}

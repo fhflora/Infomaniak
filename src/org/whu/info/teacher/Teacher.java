@@ -1,12 +1,18 @@
 package org.whu.info.teacher;
 
+import java.io.Serializable;
+
 /**
  * ≥ÈœÛ¿‡ Teacher¿‡
  * 
  * @author bobo
  *
  */
-abstract public class Teacher {
+abstract public class Teacher implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public int ID;
 	public String prenom;
 	public String nom;
@@ -34,10 +40,4 @@ abstract public class Teacher {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	public abstract boolean addTeacher(Teacher t);
-
-	public abstract boolean removeTeacher(Teacher t);
-
-	public abstract Teacher getTeacher();
 }

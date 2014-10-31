@@ -1,27 +1,27 @@
 package org.whu.info.teacher;
 
+import java.io.Serializable;
+
 /**
  * ◊”¿‡ExternalTeacher¿‡
  * 
  * @author bobo
  *
  */
-public class ExternalTeacher extends Teacher {
+public class ExternalTeacher extends Teacher implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int salary;
+	
+	public ExternalTeacher(){}
 
-	@Override
-	public boolean addTeacher(Teacher t) {
-		return false;
-	}
-
-	@Override
-	public boolean removeTeacher(Teacher t) {
-		return false;
-	}
-
-	@Override
-	public Teacher getTeacher() {
-		return null;
+	public ExternalTeacher(int ID, String prenom, String nom, int salary) {
+		super.ID = ID;
+		super.prenom = prenom;
+		super.nom = nom;
+		this.salary = salary;
 	}
 
 	public int getSalary() {
@@ -31,4 +31,5 @@ public class ExternalTeacher extends Teacher {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
+
 }
