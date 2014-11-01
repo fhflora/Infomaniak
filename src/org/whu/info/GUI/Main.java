@@ -24,6 +24,8 @@ import javax.swing.table.TableModel;
 
 import org.whu.info.campus.Campus;
 import org.whu.info.campus.ManageCampus;
+import org.whu.info.dbutil.DaoUtil;
+import org.whu.info.student.Student;
 
 public class Main extends JFrame implements ActionListener{
 
@@ -38,6 +40,7 @@ public class Main extends JFrame implements ActionListener{
 	 */
 	private JPanel panelLeft;
 	private JPanel panelRight;
+	private JPanel panelMiddle;
 	
 	JScrollPane paneStudent;
 	JScrollPane paneTeacher;
@@ -47,7 +50,7 @@ public class Main extends JFrame implements ActionListener{
 	JTable campusList;
 	JTable teacherList;
 	
-	Campus campus;
+	 Campus campus=ManageCampus.getAllCampus().get(0);
 	public Main(){
 		this.frame=new JFrame();
 		
@@ -59,6 +62,7 @@ public class Main extends JFrame implements ActionListener{
 				int selectedRow=campusList.getSelectedRow();
 				String ville=(String) campusList.getValueAt(selectedRow, 0);
 				String region=(String) campusList.getValueAt(selectedRow, 1);
+				campus=DaoUtil.getManageCampus().getCampus(ville, region);
 				System.out.println(ville+region);
 			}
 		});
@@ -68,6 +72,13 @@ public class Main extends JFrame implements ActionListener{
 		this.paneCampus.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
+		this.panelMiddle=new JPanel();
+		studentList=new JTable(this.updateStudentList(campus));
+		this.paneStudent=new JScrollPane(studentList);
+		this.paneStudent.setBackground(Color.LIGHT_GRAY);
+		this.paneStudent.setBounds(100, 50, 330, 610);
+		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 				
 		this.panelRight=new JPanel();
 		this.paneStudent=new JScrollPane();
@@ -85,13 +96,18 @@ public class Main extends JFrame implements ActionListener{
 		
 		this.panelLeft.setLayout(new BorderLayout());
 		this.panelLeft.add(this.paneCampus,BorderLayout.CENTER);
-		this.panelRight.setLayout(new GridLayout(1,1));
-		this.panelRight.add(this.paneStudent);
+		this.panelMiddle.setLayout(new BorderLayout());
+		this.panelMiddle.add(this.paneStudent);
+		this.panelRight.setLayout(new BorderLayout());
 		this.panelRight.add(this.paneTeacher);
+		
+		
+	
 		this.frame.setBounds(150,50,1000,650);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.frame.setLayout(new GridLayout(1, 1));
+		this.frame.setLayout(new GridLayout(1, 3));
 		this.frame.add(this.panelLeft);
+		this.frame.add(this.panelMiddle);
 		this.frame.add(this.panelRight);
 		this.frame.setResizable(true);
 		this.frame.setVisible(true);
@@ -117,8 +133,19 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
-	public DefaultTableModel updateStudentList(Campus campusSelected){
-		return null;
+	public DefaultTableModel updateStudentList(Campus campusSelected ){
+		List<Student> studentList=DaoUtil.getCampus().getStudents(campusSelected);
+		String[][] student=new String[studentList.size()][3];
+		for(int i=0;i<studentList.size();i++){
+			student[i][0]=studentList.get(i).getID()+"";
+			student[i][1]=studentList.get(i).getPrenom();
+			student[i][2]=studentList.get(i).getNom();
+			
+		}
+		String[] title={"ID","prenom","nom"};
+		DefaultTableModel model=new DefaultTableModel(student,title);
+		System.out.println(studentList.size()+"---");
+		return model;
 		
 	}
 
