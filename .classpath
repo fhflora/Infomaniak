@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="c3p0-0.9.1.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/DELL/Desktop/commons-logging-1.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/DELL/Desktop/druid-0.2.22.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/DELL/Desktop/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/druid-0.2.22.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/stdlib-package.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

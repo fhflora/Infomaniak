@@ -1,63 +1,76 @@
 package org.whu.info.backup;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.whu.info.campus.Campus;
 import org.whu.info.dbutil.DaoUtil;
 import org.whu.info.student.Student;
+import org.whu.info.teacher.ExternalTeacher;
+import org.whu.info.teacher.InternalTeacher;
 import org.whu.info.teacher.Teacher;
+
+import edu.princeton.cs.introcs.Out;
 
 /**
  * 数据备份类
+ * 
+ * @author bobo
+ *
  */
 public class BackupData {
+
+	public static void main(String[] args) {
+		BackupData bk = new BackupData();
+		String filePath = "C:/teacher_bk.txt";
+		bk.teachersBackup(filePath);
+	}
+
 	/**
 	 * 备份校区信息
 	 * 
 	 * @param filePath
 	 */
 	public void campusBackup(String filePath) {
-		List<Campus> campus = new ArrayList<Campus>();
-		campus = DaoUtil.getCampusDao().getAllCampus();
-		try {
-			for (int i = 0; i < campus.size(); i++) {
-				FileOutputStream fs = new FileOutputStream(filePath);
-				ObjectOutputStream os = new ObjectOutputStream(fs);
-				os.writeObject(campus.get(i));
-				os.flush();
-				os.close();
+		List<Campus> campusList = new ArrayList<Campus>();
+		campusList = DaoUtil.getCampusDao().getAllCampus();
+		Out out = new Out(filePath);
+		out.println("[");
+		for (int i = 0; i < campusList.size(); i++) {
+			Campus campus = campusList.get(i);
+			String json = "{\"ville\":\"%s\",\"region\":\"%s\",\"capacite\":%d}";
+			json = String.format(json, campus.getVille(), campus.getRegion(),
+					campus.getCapacite());
+			System.out.println(json);
+			out.println(json);
+			if (i != campusList.size() - 1) {
+				out.print(",");
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		out.println("]");
+		out.close();
 	}
 
 	/**
 	 * 备份学生数据
 	 */
 	public void studentsBackup(String filePath) {
-		List<Student> students = new ArrayList<Student>();
-		students = DaoUtil.getCampus().getAllStudents();
-		try {
-			for (int i = 0; i < students.size(); i++) {
-				FileOutputStream fs = new FileOutputStream(filePath);
-				ObjectOutputStream os = new ObjectOutputStream(fs);
-				os.writeObject(students.get(i));
-				os.flush();
-				os.close();
+		List<Student> studentsList = new ArrayList<Student>();
+		studentsList = DaoUtil.getCampus().getAllStudents();
+		Out out = new Out(filePath);
+		out.println("[");
+		for (int i = 0; i < studentsList.size(); i++) {
+			Student student = studentsList.get(i);
+			String json = "{\"stu_ID\":%d,\"prenom\":\"%s\",\"nom\":\"%s\",\"ville\":\"%s\",\"region\":\"%s\"}";
+			json = String.format(json, student.getID(), student.getPrenom(),
+					student.getNom(), student.getVille(), student.getRegion());
+			System.out.println(json);
+			out.println(json);
+			if (i != studentsList.size() - 1) {
+				out.print(",");
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		out.println("]");
+		out.close();
 	}
 
 	/**
@@ -66,20 +79,31 @@ public class BackupData {
 	 * @param filePath
 	 */
 	public void teachersBackup(String filePath) {
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		teachers = DaoUtil.getCampus().getTeachers();
-		try {
-			for (int i = 0; i < teachers.size(); i++) {
-				FileOutputStream fs = new FileOutputStream(filePath);
-				ObjectOutputStream os = new ObjectOutputStream(fs);
-				os.writeObject(teachers.get(i));
-				os.flush();
-				os.close();
+		List<Teacher> teachersList = new ArrayList<Teacher>();
+		teachersList = DaoUtil.getCampus().getTeachers();
+		Out out = new Out(filePath);
+		out.println("[");
+		for (int i = 0; i < teachersList.size(); i++) {
+			Teacher teacher = teachersList.get(i);
+			String json = "{\"tea_ID\":%d,\"prenom\":\"%s\",\"nom\":\"%s\",\"salary\":%d}";
+			if (teacher instanceof InternalTeacher) {
+				InternalTeacher internalT = (InternalTeacher) teacher;
+				json = String.format(json, internalT.getID(),
+						internalT.getPrenom(), internalT.getNom(),
+						InternalTeacher.salary);
+			} else {
+				ExternalTeacher externalT = (ExternalTeacher) teacher;
+				json = String.format(json, externalT.getID(),
+						externalT.getPrenom(), externalT.getNom(),
+						externalT.getSalary());
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(json);
+			out.println(json);
+			if (i != teachersList.size() - 1) {
+				out.print(",");
+			}
 		}
+		out.println("]");
+		out.close();
 	}
 }
