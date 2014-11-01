@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Vector;
 
@@ -45,17 +47,21 @@ public class Main extends JFrame implements ActionListener{
 	JTable campusList;
 	JTable teacherList;
 	
+	Campus campus;
 	public Main(){
 		this.frame=new JFrame();
-		this.paneStudent =new JScrollPane();
-		this.paneTeacher =new JScrollPane();
-		this.paneCampus =new JScrollPane();
 		
 		this.panelLeft = new JPanel();
-		
-		DefaultTableModel model=this.updateCampusList();
-		campusList=new JTable(model);
-		this.paneCampus.add(campusList);
+		campusList=new JTable(this.updateCampusList());
+		this.paneCampus=new JScrollPane(campusList);
+		this.campusList.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				int selectedRow=campusList.getSelectedRow();
+				String ville=(String) campusList.getValueAt(selectedRow, 0);
+				String region=(String) campusList.getValueAt(selectedRow, 1);
+				System.out.println(ville+region);
+			}
+		});
 		this.paneCampus.setBackground(Color.lightGray);
 		this.paneCampus.setBounds(0, 50, 330, 610);
 		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
@@ -64,11 +70,13 @@ public class Main extends JFrame implements ActionListener{
 		
 				
 		this.panelRight=new JPanel();
+		this.paneStudent=new JScrollPane();
 		this.paneStudent.setBackground(Color.LIGHT_GRAY);
 		this.paneStudent.setBounds(100, 50, 330, 610);
 		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
+		this.paneTeacher=new JScrollPane();
 		this.paneTeacher.setBackground(Color.LIGHT_GRAY);
 		this.paneTeacher.setBounds(100, 50, 330, 610);
 		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
@@ -109,11 +117,13 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
-	public void updateStudentList(){
+	public DefaultTableModel updateStudentList(Campus campusSelected){
+		return null;
 		
 	}
 
-	public void updateTeacherList(){
+	public DefaultTableModel updateTeacherList(Campus campusSelected){
+		return null;
 		
 	}
 }
