@@ -1,7 +1,9 @@
 package org.whu.info.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,7 +27,6 @@ public class Main extends JFrame implements ActionListener{
 	 */
 	private JPanel panelLeft;
 	private JPanel panelRight;
-	private JPanel panelMiddle;
 	
 	JScrollPane paneStudent;
 	JScrollPane paneTeacher;
@@ -33,39 +34,40 @@ public class Main extends JFrame implements ActionListener{
 	
 	public Main(){
 		this.frame=new JFrame();
-		this.panelLeft = new JPanel();
-		this.panelLeft.setBackground(Color.lightGray);
-		this.panelLeft.setBounds(0, 50, 330, 610);
-		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
-		this.panelLeft.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
-		
-		this.panelMiddle=new JPanel();
-		this.panelMiddle.setBackground(Color.lightGray);
-		this.panelMiddle.setBounds(50, 50, 330, 610);
-		this.panelMiddle.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
-		
-		
-		this.panelRight=new JPanel();
-		this.panelRight.setBackground(Color.LIGHT_GRAY);
-		this.panelRight.setBounds(100, 50, 330, 610);
-		this.panelRight.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
-		
-		this.frame.setBounds(150,50,1000,650);
-		
 		this.paneStudent =new JScrollPane();
 		this.paneTeacher =new JScrollPane();
 		this.paneCampus =new JScrollPane();
 		
-		this.panelLeft.add(this.paneCampus);
+		this.panelLeft = new JPanel();
+		this.paneCampus.setBackground(Color.lightGray);
+		this.paneCampus.setBounds(0, 50, 330, 610);
+		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
+		this.paneCampus.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
+		
+				
+		this.panelRight=new JPanel();
+		this.paneStudent.setBackground(Color.LIGHT_GRAY);
+		this.paneStudent.setBounds(100, 50, 330, 610);
+		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
+		
+		this.paneTeacher.setBackground(Color.LIGHT_GRAY);
+		this.paneTeacher.setBounds(100, 50, 330, 610);
+		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
+		
+		
+		this.panelLeft.setLayout(new BorderLayout());
+		this.panelLeft.add(this.paneCampus,BorderLayout.CENTER);
+		this.panelRight.setLayout(new GridLayout(1,1));
 		this.panelRight.add(this.paneStudent);
-		this.panelMiddle.add(this.paneTeacher);
+		this.panelRight.add(this.paneTeacher);
+		this.frame.setBounds(150,50,1000,650);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.frame.setLayout(new GridLayout(1, 1));
 		this.frame.add(this.panelLeft);
 		this.frame.add(this.panelRight);
-		this.frame.add(this.panelMiddle);
 		this.frame.setResizable(false);
 		this.frame.setVisible(true);
 	}
