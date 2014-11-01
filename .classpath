@@ -2,10 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/F/Github/Infomaniak/src/c3p0-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/F/Github/Infomaniak/src/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/F/Github/Infomaniak/src/druid-0.2.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/F/Github/Infomaniak/src/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/F/Github/Infomaniak/src/stdlib-package.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/druid-0.2.22.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="E:/workspace/Infomaniak/stdlib-package.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
