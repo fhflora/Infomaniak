@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.whu.info.campus.Campus;
 import org.whu.info.dbutil.DBUtil;
 import org.whu.info.teacher.ExternalTeacher;
 import org.whu.info.teacher.InternalTeacher;
@@ -14,10 +15,38 @@ import org.whu.info.teacher.Teacher;
 
 /**
  * 教师表操作类
+ * 
  * @author bobo
  *
  */
 public class TeacherDao {
+
+	public List<Teacher> getAllteachers() {
+		List<Teacher> allTeachersList = new ArrayList<Teacher>();
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from teacher order by tea_ID ";
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			while (rst.next()) {
+				Teacher teacher;
+				if (rst.getInt("flag") == 0) {
+					teacher = new InternalTeacher();
+					fillInternalTeacher(rst, (InternalTeacher) teacher);
+				} else {
+					teacher = new ExternalTeacher();
+					fillExternalTeacher(rst, (ExternalTeacher) teacher);
+				}
+				allTeachersList.add(teacher);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allTeachersList;
+	}
+
 	/**
 	 * 添加内部教师到数据表
 	 * 
@@ -28,9 +57,9 @@ public class TeacherDao {
 		int res = -1;
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "insert into teacher(tea_ID,prenom,nom,salary,flag) values(%d,'%s','%s','%d',0)";
+		String sql = "insert into teacher(tea_ID,prenom,nom,salary,flag,ville,region) values(%d,'%s','%s','%d',0,'%s','%s')";
 		sql = String.format(sql, s.getID(), s.getPrenom(), s.getNom(),
-				InternalTeacher.salary);
+				InternalTeacher.salary, s.getVille(), s.getRegion());
 		System.out.println(sql);
 		try {
 			stmt.execute(sql);
@@ -54,9 +83,9 @@ public class TeacherDao {
 		int res = -1;
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "insert into teacher(tea_ID,prenom,nom,salary,flag) values(%d,'%s','%s','%d',1)";
+		String sql = "insert into teacher(tea_ID,prenom,nom,salary,flag,ville,region) values(%d,'%s','%s','%d',1,'%s','%s')";
 		sql = String.format(sql, s.getID(), s.getPrenom(), s.getNom(),
-				s.getSalary());
+				s.getSalary(), s.getVille(), s.getRegion());
 		System.out.println(sql);
 		try {
 			stmt.execute(sql);
@@ -120,11 +149,12 @@ public class TeacherDao {
 	 * 
 	 * @param args
 	 */
-	public List<InternalTeacher> getInternalTeachers() {
+	public List<InternalTeacher> getInternalTeachers(Campus c) {
 		List<InternalTeacher> TeachersList = new ArrayList<InternalTeacher>();
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "select * from teacher where flag=0 ";
+		String sql = "select * from teacher where flag=0 and ville='%s' and region='%s'";
+		sql = String.format(sql, c.getVille(), c.getRegion());
 		ResultSet rst = DBUtil.getRs(stmt, sql);
 		try {
 			while (rst.next()) {
@@ -144,6 +174,8 @@ public class TeacherDao {
 			t.setID(rst.getInt("tea_ID"));
 			t.setPrenom(rst.getString("prenom"));
 			t.setNom(rst.getString("nom"));
+			t.setVille(rst.getString("ville"));
+			t.setRegion(rst.getString("region"));
 			InternalTeacher.salary = rst.getInt("salary");
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -151,15 +183,16 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 获取全部教师列表
+	 * 获取校区教师列表
 	 * 
 	 * @return
 	 */
-	public List<Teacher> getTeachers() {
+	public List<Teacher> getTeachers(Campus c) {
 		List<Teacher> TeachersList = new ArrayList<Teacher>();
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "select * from teacher ";
+		String sql = "select * from teacher where ville='%s' and region='%s'";
+		sql = String.format(sql, c.getVille(), c.getRegion());
 		ResultSet rst = DBUtil.getRs(stmt, sql);
 		try {
 			while (rst.next()) {
@@ -184,11 +217,12 @@ public class TeacherDao {
 	 * 
 	 * @param args
 	 */
-	public List<ExternalTeacher> getExternalTeachers() {
+	public List<ExternalTeacher> getExternalTeachers(Campus c) {
 		List<ExternalTeacher> TeachersList = new ArrayList<ExternalTeacher>();
 		Connection conn = DBUtil.getConn();
 		Statement stmt = DBUtil.createStmt(conn);
-		String sql = "select * from teacher where flag=1 ";
+		String sql = "select * from teacher where flag=1 and ville='%s' and region='%s'";
+		sql = String.format(sql, c.getVille(), c.getRegion());
 		ResultSet rst = DBUtil.getRs(stmt, sql);
 		try {
 			while (rst.next()) {
@@ -209,6 +243,8 @@ public class TeacherDao {
 			t.setPrenom(rst.getString("prenom"));
 			t.setNom(rst.getString("nom"));
 			t.setSalary(rst.getInt("salary"));
+			t.setVille(rst.getString("ville"));
+			t.setRegion(rst.getString("region"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -80,7 +80,7 @@ public class BackupData {
 	 */
 	public void teachersBackup(String filePath) {
 		List<Teacher> teachersList = new ArrayList<Teacher>();
-		teachersList = DaoUtil.getCampus().getTeachers();
+		teachersList = DaoUtil.getTeacherDao().getAllteachers();
 		Out out = new Out(filePath);
 		out.println("[");
 		for (int i = 0; i < teachersList.size(); i++) {

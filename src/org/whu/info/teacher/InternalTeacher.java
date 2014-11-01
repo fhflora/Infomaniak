@@ -20,10 +20,13 @@ public class InternalTeacher extends Teacher implements Serializable {
 	public InternalTeacher() {
 	}
 
-	public InternalTeacher(int ID, String prenom, String nom) {
+	public InternalTeacher(int ID, String prenom, String nom, String ville,
+			String region) {
 		super.ID = ID;
 		super.prenom = prenom;
 		super.nom = nom;
+		super.ville = ville;
+		super.region = region;
 	}
 
 	/**

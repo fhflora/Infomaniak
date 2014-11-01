@@ -16,6 +16,24 @@ abstract public class Teacher implements Serializable {
 	public int ID;
 	public String prenom;
 	public String nom;
+	public String ville;
+	public String region;
+	
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
 
 	public int getID() {
 		return ID;

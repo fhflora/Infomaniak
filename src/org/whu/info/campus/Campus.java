@@ -93,8 +93,10 @@ public class Campus implements Serializable {
 		}
 		return res;
 	}
+
 	/**
 	 * 获取全部学生列表
+	 * 
 	 * @return
 	 */
 	public List<Student> getAllStudents() {
@@ -102,6 +104,7 @@ public class Campus implements Serializable {
 		students = DaoUtil.getStudentDao().getAllStudent();
 		return students;
 	}
+
 	/**
 	 * 获取校区学生列表
 	 * 
@@ -161,9 +164,9 @@ public class Campus implements Serializable {
 	 * 
 	 * @return
 	 */
-	public List<Teacher> getTeachers() {
+	public List<Teacher> getTeachers(Campus c) {
 		List<Teacher> teachers = new ArrayList<Teacher>();
-		teachers = DaoUtil.getTeacherDao().getTeachers();
+		teachers = DaoUtil.getTeacherDao().getTeachers(c);
 		return teachers;
 	}
 }
