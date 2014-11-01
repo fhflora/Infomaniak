@@ -6,13 +6,22 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneLayout;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import org.whu.info.campus.Campus;
+import org.whu.info.campus.ManageCampus;
 
 public class Main extends JFrame implements ActionListener{
 
@@ -32,6 +41,10 @@ public class Main extends JFrame implements ActionListener{
 	JScrollPane paneTeacher;
 	JScrollPane paneCampus;
 	
+	JTable studentList;
+	JTable campusList;
+	JTable teacherList;
+	
 	public Main(){
 		this.frame=new JFrame();
 		this.paneStudent =new JScrollPane();
@@ -39,6 +52,10 @@ public class Main extends JFrame implements ActionListener{
 		this.paneCampus =new JScrollPane();
 		
 		this.panelLeft = new JPanel();
+		
+		DefaultTableModel model=this.updateCampusList();
+		campusList=new JTable(model);
+		this.paneCampus.add(campusList);
 		this.paneCampus.setBackground(Color.lightGray);
 		this.paneCampus.setBounds(0, 50, 330, 610);
 		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
@@ -68,7 +85,7 @@ public class Main extends JFrame implements ActionListener{
 		this.frame.setLayout(new GridLayout(1, 1));
 		this.frame.add(this.panelLeft);
 		this.frame.add(this.panelRight);
-		this.frame.setResizable(false);
+		this.frame.setResizable(true);
 		this.frame.setVisible(true);
 	}
 	public static void main(String args[]) {
@@ -79,7 +96,16 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
-	public void updateCampusList(){
+	public DefaultTableModel updateCampusList(){
+		List<Campus> campusList=ManageCampus.getAllCampus();
+		String[][] campus=new String[campusList.size()][2];
+		for(int i=0;i<campusList.size();i++){
+			campus[i][0]=campusList.get(i).getVille();
+			campus[i][1]=campusList.get(i).getRegion();
+		}
+		String[] title={"Ville","Region"};
+		DefaultTableModel model=new DefaultTableModel(campus,title);
+		return model;
 		
 	}
 	
