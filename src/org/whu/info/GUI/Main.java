@@ -9,14 +9,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ScrollPaneLayout;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
@@ -26,6 +24,7 @@ import org.whu.info.campus.Campus;
 import org.whu.info.campus.ManageCampus;
 import org.whu.info.dbutil.DaoUtil;
 import org.whu.info.student.Student;
+import org.whu.info.teacher.Teacher;
 
 public class Main extends JFrame implements ActionListener{
 
@@ -51,6 +50,7 @@ public class Main extends JFrame implements ActionListener{
 	JTable teacherList;
 	
 	 Campus campus=ManageCampus.getAllCampus().get(0);
+	 
 	public Main(){
 		this.frame=new JFrame();
 		
@@ -63,6 +63,8 @@ public class Main extends JFrame implements ActionListener{
 				String ville=(String) campusList.getValueAt(selectedRow, 0);
 				String region=(String) campusList.getValueAt(selectedRow, 1);
 				campus=DaoUtil.getManageCampus().getCampus(ville, region);
+				studentList.setModel(updateStudentList(campus));
+				teacherList.setModel(updateTeacherList(campus));
 				System.out.println(ville+region);
 			}
 		});
@@ -80,14 +82,9 @@ public class Main extends JFrame implements ActionListener{
 		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 				
-		this.panelRight=new JPanel();
-		this.paneStudent=new JScrollPane();
-		this.paneStudent.setBackground(Color.LIGHT_GRAY);
-		this.paneStudent.setBounds(100, 50, 330, 610);
-		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
-		
-		this.paneTeacher=new JScrollPane();
+		this.panelRight=new JPanel();	
+		teacherList=new JTable(this.updateStudentList(campus));
+		this.paneTeacher=new JScrollPane(teacherList);
 		this.paneTeacher.setBackground(Color.LIGHT_GRAY);
 		this.paneTeacher.setBounds(100, 50, 330, 610);
 		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
@@ -120,7 +117,7 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
-	public DefaultTableModel updateCampusList(){
+	public TableModel updateCampusList(){
 		List<Campus> campusList=ManageCampus.getAllCampus();
 		String[][] campus=new String[campusList.size()][2];
 		for(int i=0;i<campusList.size();i++){
@@ -133,7 +130,7 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 	
-	public DefaultTableModel updateStudentList(Campus campusSelected ){
+	public TableModel updateStudentList(Campus campusSelected ){
 		List<Student> studentList=DaoUtil.getCampus().getStudents(campusSelected);
 		String[][] student=new String[studentList.size()][3];
 		for(int i=0;i<studentList.size();i++){
@@ -144,13 +141,24 @@ public class Main extends JFrame implements ActionListener{
 		}
 		String[] title={"ID","prenom","nom"};
 		DefaultTableModel model=new DefaultTableModel(student,title);
-		System.out.println(studentList.size()+"---");
+		System.out.println("---studentList: "+studentList.size()+"---");
 		return model;
 		
 	}
 
 	public DefaultTableModel updateTeacherList(Campus campusSelected){
-		return null;
+		List<Teacher> teacherList=DaoUtil.getCampus().getTeachers(campusSelected);
+		String[][] student=new String[teacherList.size()][3];
+		for(int i=0;i<teacherList.size();i++){
+			student[i][0]=teacherList.get(i).getID()+"";
+			student[i][1]=teacherList.get(i).getPrenom();
+			student[i][2]=teacherList.get(i).getNom();
+			
+		}
+		String[] title={"ID","prenom","nom"};
+		DefaultTableModel model=new DefaultTableModel(student,title);
+		System.out.println("---teacherList: "+teacherList.size()+"---");
+		return model;
 		
 	}
 }
