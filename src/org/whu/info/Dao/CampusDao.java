@@ -17,7 +17,35 @@ import org.whu.info.dbutil.DBUtil;
  *
  */
 public class CampusDao {
-
+	/**
+	 * 获取一个校区
+	 * 
+	 * @param ville
+	 * @param region
+	 * @return
+	 */
+	public Campus getCampus(String ville, String region) {
+		Campus campus = null;
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from Campus where ville='" + ville + "'"
+				+ " and region=" + "'" + region + "'";
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		try {
+			if (rst.next()) {
+				campus = new Campus();
+				campus.setCapacite(rst.getInt("capacite"));
+				campus.setVille(rst.getString("ville"));
+				campus.setRegion(rst.getString("region"));
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return campus;
+	}
 	/**
 	 * 获取校区列表
 	 * 
