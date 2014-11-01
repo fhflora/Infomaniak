@@ -78,5 +78,16 @@ public class Main extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 	}
+	
+	public void updateCampusList(){
+		
+	}
+	
+	public void updateStudentList(){
+		
+	}
 
+	public void updateTeacherList(){
+		
+	}
 }
