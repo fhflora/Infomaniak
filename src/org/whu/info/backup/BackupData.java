@@ -14,9 +14,6 @@ import org.whu.info.teacher.Teacher;
 
 /**
  * 数据备份类
- * 
- * @author bobo
- *
  */
 public class BackupData {
 	/**
