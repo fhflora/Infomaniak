@@ -49,9 +49,50 @@ public class Main extends JFrame implements ActionListener{
 	JButton btnAddLeft;
 	JButton btnBackupLeft;
 	JPanel panelMenuLeft;
+	
+	JButton btnAddMiddle;
+	JButton btnDelMiddle;
+	JButton btnBackupMiddle;
+	JPanel panelMenuMiddle;
+	
+	JButton btnAddRight;
+	JButton btnDelRight;
+	JButton btnBackupRight;
+	JPanel panelMenuRight;
+	
+	
 	Campus campus=ManageCampus.getAllCampus().get(0);
 	 
 	public Main(){
+		 btnAddLeft=new JButton("Add");
+		 btnBackupLeft=new JButton("Backup");
+		 btnAddMiddle=new JButton("Add");
+		 btnDelMiddle=new JButton("Delete");
+		 btnBackupMiddle=new JButton("Backup");
+		 btnAddRight=new JButton("Add");
+		 btnDelRight=new JButton("Delete");
+		 btnBackupRight=new JButton("Backup");
+		 
+		 this.btnAddLeft.addActionListener(this);
+		 this.btnBackupLeft.addActionListener(this);
+		 this.btnAddMiddle.addActionListener(this);
+		 this.btnDelMiddle.addActionListener(this);
+		 this.btnBackupMiddle.addActionListener(this);
+		 this.btnAddRight.addActionListener(this);
+		 this.btnDelRight.addActionListener(this);
+		 this.btnBackupRight.addActionListener(this);
+		 
+		panelMenuLeft=new JPanel();
+		panelMenuLeft.add(btnAddLeft);
+		panelMenuLeft.add(btnBackupLeft);
+		panelMenuMiddle=new JPanel();
+		panelMenuMiddle.add(btnAddMiddle);
+		panelMenuMiddle.add(btnDelMiddle);
+		panelMenuMiddle.add(btnBackupMiddle);
+		panelMenuRight=new JPanel();
+		panelMenuRight.add(btnAddRight);
+		panelMenuRight.add(btnDelRight);
+		panelMenuRight.add(btnBackupRight);
 		this.frame=new JFrame();
 
 		this.panelLeft = new JPanel();
@@ -87,14 +128,9 @@ public class Main extends JFrame implements ActionListener{
 		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
-		 btnAddLeft=new JButton("Add");
-		 btnBackupLeft=new JButton("Backup");
-		 
-		 this.btnAddLeft.addActionListener(this);
-		 this.btnBackupLeft.addActionListener(this);
-		 panelMenuLeft=new JPanel();
-		panelMenuLeft.add(btnAddLeft);
-		panelMenuLeft.add(btnBackupLeft);
+		
+		
+		
 		this.panelLeft.setLayout(new BorderLayout());
 		this.panelLeft.add(this.panelMenuLeft,BorderLayout.NORTH);
 		this.panelLeft.add(this.paneCampus,BorderLayout.CENTER);
@@ -104,16 +140,14 @@ public class Main extends JFrame implements ActionListener{
 		this.panelLeft.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
-		
-		
-		
 		this.panelMiddle.setLayout(new BorderLayout());
-		this.panelMiddle.add(this.paneStudent);
+		this.panelMiddle.add(this.panelMenuMiddle, BorderLayout.NORTH);
+		this.panelMiddle.add(this.paneStudent, BorderLayout.CENTER);
+		
 		this.panelRight.setLayout(new BorderLayout());
-		this.panelRight.add(this.paneTeacher);
+		this.panelRight.add(this.panelMenuRight, BorderLayout.NORTH);
+		this.panelRight.add(this.paneTeacher, BorderLayout.CENTER);
 		
-		
-	
 		this.frame.setBounds(150,50,1000,650);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setLayout(new GridLayout(1, 3));
