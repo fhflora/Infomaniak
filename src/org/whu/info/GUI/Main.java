@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -11,7 +12,11 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -29,13 +34,15 @@ import org.whu.info.teacher.Teacher;
 public class Main extends JFrame implements ActionListener{
 
 	/**
-	 * 
+	 * Menu菜单 有new、 remove 、backup
 	 */
+	String[] NewItems = new String[] { "Campus", "Student", "Teacher"};
+	String[] RemoItems = new String[] { "Campus", "Student", "Teacher"};
+	
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	/**
-	 * 界面分两边 左边是学校列表
-	 * 右边 又分两个部分，是学生列表和教师列表
+	 * 界面分左中右
 	 */
 	private JPanel panelLeft;
 	private JPanel panelRight;
@@ -53,7 +60,30 @@ public class Main extends JFrame implements ActionListener{
 	 
 	public Main(){
 		this.frame=new JFrame();
+		JButton button=new JButton("删除");
+		JMenuBar Menu=new JMenuBar();
 		
+		JMenu NewMenu = new JMenu("New");
+        JMenu RemoMenu = new JMenu("Remove");
+        JMenu BackMenu = new JMenu("Backup");
+        Menu.add(NewMenu);
+        Menu.add(RemoMenu);
+        Menu.add(BackMenu);
+        
+        ActionListener printListener = new ActionListener( ) {
+            public void actionPerformed(ActionEvent event) {
+                System.out.println("Menu item [" + event.getActionCommand( ) +"] was pressed.");
+            }
+        };
+        for (int i=0; i < NewItems.length; i++) {
+            JMenuItem item = new JMenuItem(NewItems[i]);
+            JMenuItem item2 = new JMenuItem(RemoItems[i]);
+            item2.addActionListener(printListener);
+            item.addActionListener(printListener);
+            NewMenu.add(item);
+            RemoMenu.add(item2);
+            }
+        
 		this.panelLeft = new JPanel();
 		campusList=new JTable(this.updateCampusList());
 		this.paneCampus=new JScrollPane(campusList);
@@ -106,6 +136,7 @@ public class Main extends JFrame implements ActionListener{
 		this.frame.add(this.panelLeft);
 		this.frame.add(this.panelMiddle);
 		this.frame.add(this.panelRight);
+		this.frame.setJMenuBar(Menu);
 		this.frame.setResizable(true);
 		this.frame.setVisible(true);
 	}
@@ -148,15 +179,15 @@ public class Main extends JFrame implements ActionListener{
 
 	public DefaultTableModel updateTeacherList(Campus campusSelected){
 		List<Teacher> teacherList=DaoUtil.getCampus().getTeachers(campusSelected);
-		String[][] student=new String[teacherList.size()][3];
+		String[][] teacher=new String[teacherList.size()][3];
 		for(int i=0;i<teacherList.size();i++){
-			student[i][0]=teacherList.get(i).getID()+"";
-			student[i][1]=teacherList.get(i).getPrenom();
-			student[i][2]=teacherList.get(i).getNom();
+			teacher[i][0]=teacherList.get(i).getID()+"";
+			teacher[i][1]=teacherList.get(i).getPrenom();
+			teacher[i][2]=teacherList.get(i).getNom();
 			
 		}
 		String[] title={"ID","prenom","nom"};
-		DefaultTableModel model=new DefaultTableModel(student,title);
+		DefaultTableModel model=new DefaultTableModel(teacher,title);
 		System.out.println("---teacherList: "+teacherList.size()+"---");
 		return model;
 		
