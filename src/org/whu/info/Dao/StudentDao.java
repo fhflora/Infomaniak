@@ -69,6 +69,32 @@ public class StudentDao {
 		}
 		return allStudentList;
 	}
+	
+	/**
+	 * Get one student
+	 * @param c
+	 * @param prenom
+	 * @param nom
+	 * @return
+	 */
+	public Student getOneStudent(Campus c,String prenom,String nom){
+		boolean res = false;
+		Connection conn = DBUtil.getConn();
+		Statement stmt = DBUtil.createStmt(conn);
+		String sql = "select * from student where prenom= '%s' and  nom='%s' and ville='%s' and region='%s'";
+		sql = String.format(sql, prenom, nom,c.getVille(),c.getRegion());
+		System.out.println(sql);
+		ResultSet rst = DBUtil.getRs(stmt, sql);
+		Student student=new Student();
+		try {
+			while (rst.next()) {
+				fillRsStudent(rst, student);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return student;
+	}
 
 	/**
 	 * 查询表中ID判断是否存在

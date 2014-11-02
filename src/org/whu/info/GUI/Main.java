@@ -60,9 +60,9 @@ public class Main extends JFrame implements ActionListener{
 	JButton btnBackupRight;
 	JPanel panelMenuRight;
 	
-	
+	UICampus addCampus;
 	Campus campus=ManageCampus.getAllCampus().get(0);
-	 
+	
 	public Main(){
 		 btnAddLeft=new JButton("Add");
 		 btnBackupLeft=new JButton("Backup");
@@ -93,8 +93,8 @@ public class Main extends JFrame implements ActionListener{
 		panelMenuRight.add(btnAddRight);
 		panelMenuRight.add(btnDelRight);
 		panelMenuRight.add(btnBackupRight);
+		
 		this.frame=new JFrame();
-
 		this.panelLeft = new JPanel();
 		campusList=new JTable(this.updateCampusList());
 		this.paneCampus=new JScrollPane(campusList);
@@ -110,43 +110,38 @@ public class Main extends JFrame implements ActionListener{
 			}
 		});
 		
-		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
-		
 		this.panelMiddle=new JPanel();
 		studentList=new JTable(this.updateStudentList(campus));
 		this.paneStudent=new JScrollPane(studentList);
-		this.paneStudent.setBackground(Color.LIGHT_GRAY);
-		this.paneStudent.setBounds(100, 50, 330, 610);
-		this.paneStudent.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 				
 		this.panelRight=new JPanel();	
 		teacherList=new JTable(this.updateStudentList(campus));
 		this.paneTeacher=new JScrollPane(teacherList);
-		this.paneTeacher.setBackground(Color.LIGHT_GRAY);
-		this.paneTeacher.setBounds(100, 50, 330, 610);
-		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
-		
-		
-		
-		
+	
 		this.panelLeft.setLayout(new BorderLayout());
 		this.panelLeft.add(this.panelMenuLeft,BorderLayout.NORTH);
 		this.panelLeft.add(this.paneCampus,BorderLayout.CENTER);
+		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
 		this.panelLeft.setBackground(Color.lightGray);
 		this.panelLeft.setBounds(0, 50, 330, 610);
-
 		this.panelLeft.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
 		this.panelMiddle.setLayout(new BorderLayout());
 		this.panelMiddle.add(this.panelMenuMiddle, BorderLayout.NORTH);
-		this.panelMiddle.add(this.paneStudent, BorderLayout.CENTER);
-		
+		this.panelMiddle.add(this.paneStudent, BorderLayout.CENTER);	
+		this.panelMiddle.setBackground(Color.LIGHT_GRAY);
+		this.panelMiddle.setBounds(100, 50, 330, 610);
+		this.panelMiddle.setBorder(BorderFactory.createTitledBorder(border,"Student" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
+			
 		this.panelRight.setLayout(new BorderLayout());
 		this.panelRight.add(this.panelMenuRight, BorderLayout.NORTH);
 		this.panelRight.add(this.paneTeacher, BorderLayout.CENTER);
+		this.panelRight.setBackground(Color.LIGHT_GRAY);
+		this.panelRight.setBounds(100, 50, 330, 610);
+		this.panelRight.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
 		this.frame.setBounds(150,50,1000,650);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -210,6 +205,33 @@ public class Main extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		Object source=e.getSource();
 		if(source==this.btnAddLeft){
+			if(addCampus==null){
+				addCampus=new UICampus(this.frame);
+			}else{
+				addCampus.setVisible(true);
+			}
+		Campus newCampus=new Campus(addCampus.getVille(),addCampus.getRegion(),addCampus.getCapacite());
+		
+		}else if(source==this.btnAddMiddle){
+			
+		}else if(source==this.btnAddRight){
+			
+		}else if(source==this.btnBackupLeft){
+			
+		}else if(source==this.btnBackupMiddle){
+			
+		}else if(source==this.btnBackupRight){
+			
+		}else if(source==this.btnDelMiddle){
+			int selectedRow=studentList.getSelectedRow();
+			String prenom=(String) studentList.getValueAt(selectedRow, 1);
+			String nom=(String) studentList.getValueAt(selectedRow, 2);
+			Student studentSelected=campus.getStudent(prenom, nom);
+			campus.removeStudent(studentSelected);
+			//this.updateStudentList(campus);
+			studentList.setModel(this.updateStudentList(campus));
+			
+		}else if(source==this.btnDelRight){
 			
 		}
 	}

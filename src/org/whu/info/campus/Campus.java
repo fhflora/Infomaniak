@@ -44,6 +44,14 @@ public class Campus implements Serializable {
 		this.capacite = capacite;
 	}
 
+	public Campus(){
+		
+	}
+	public Campus(String ville,String region, int capacite){
+		this.ville=ville;
+		this.region=region;
+		this.capacite=capacite;
+	}
 	/**
 	 * 添加一个学生
 	 * 
@@ -158,6 +166,18 @@ public class Campus implements Serializable {
 		}
 		return false;
 	}
+	
+	/**
+	 * Get one student from his name and first name
+	 * @param prenom
+	 * @param nom
+	 * @return
+	 */
+	   public Student getStudent(String prenom,String nom){
+		   Student student=null;
+		   student=DaoUtil.getStudentDao().getOneStudent(this, prenom, nom);
+		   return student;
+	   }
 
 	/**
 	 * 获取教师列表
