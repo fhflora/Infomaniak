@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,9 +13,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,12 +28,6 @@ import org.whu.info.student.Student;
 import org.whu.info.teacher.Teacher;
 
 public class Main extends JFrame implements ActionListener{
-
-	/**
-	 * Menu²Ëµ¥ ÓÐnew¡¢ remove ¡¢backup
-	 */
-	String[] NewItems = new String[] { "Campus", "Student", "Teacher"};
-	String[] RemoItems = new String[] { "Campus", "Student", "Teacher"};
 	
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -56,34 +46,14 @@ public class Main extends JFrame implements ActionListener{
 	JTable campusList;
 	JTable teacherList;
 	
-	 Campus campus=ManageCampus.getAllCampus().get(0);
+	JButton btnAddLeft;
+	JButton btnBackupLeft;
+	JPanel panelMenuLeft;
+	Campus campus=ManageCampus.getAllCampus().get(0);
 	 
 	public Main(){
 		this.frame=new JFrame();
-		JButton button=new JButton("É¾³ý");
-		JMenuBar Menu=new JMenuBar();
-		
-		JMenu NewMenu = new JMenu("New");
-        JMenu RemoMenu = new JMenu("Remove");
-        JMenu BackMenu = new JMenu("Backup");
-        Menu.add(NewMenu);
-        Menu.add(RemoMenu);
-        Menu.add(BackMenu);
-        
-        ActionListener printListener = new ActionListener( ) {
-            public void actionPerformed(ActionEvent event) {
-                System.out.println("Menu item [" + event.getActionCommand( ) +"] was pressed.");
-            }
-        };
-        for (int i=0; i < NewItems.length; i++) {
-            JMenuItem item = new JMenuItem(NewItems[i]);
-            JMenuItem item2 = new JMenuItem(RemoItems[i]);
-            item2.addActionListener(printListener);
-            item.addActionListener(printListener);
-            NewMenu.add(item);
-            RemoMenu.add(item2);
-            }
-        
+
 		this.panelLeft = new JPanel();
 		campusList=new JTable(this.updateCampusList());
 		this.paneCampus=new JScrollPane(campusList);
@@ -98,11 +68,8 @@ public class Main extends JFrame implements ActionListener{
 				System.out.println(ville+region);
 			}
 		});
-		this.paneCampus.setBackground(Color.lightGray);
-		this.paneCampus.setBounds(0, 50, 330, 610);
+		
 		Border border=BorderFactory.createEtchedBorder(Color.black, Color.BLUE);
-		this.paneCampus.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
-				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
 		this.panelMiddle=new JPanel();
 		studentList=new JTable(this.updateStudentList(campus));
@@ -120,9 +87,26 @@ public class Main extends JFrame implements ActionListener{
 		this.paneTeacher.setBorder(BorderFactory.createTitledBorder(border,"Teacher" , TitledBorder.LEFT,
 				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
 		
-		
+		 btnAddLeft=new JButton("Add");
+		 btnBackupLeft=new JButton("Backup");
+		 
+		 this.btnAddLeft.addActionListener(this);
+		 this.btnBackupLeft.addActionListener(this);
+		 panelMenuLeft=new JPanel();
+		panelMenuLeft.add(btnAddLeft);
+		panelMenuLeft.add(btnBackupLeft);
 		this.panelLeft.setLayout(new BorderLayout());
+		this.panelLeft.add(this.panelMenuLeft,BorderLayout.NORTH);
 		this.panelLeft.add(this.paneCampus,BorderLayout.CENTER);
+		this.panelLeft.setBackground(Color.lightGray);
+		this.panelLeft.setBounds(0, 50, 330, 610);
+
+		this.panelLeft.setBorder(BorderFactory.createTitledBorder(border,"Campus" , TitledBorder.LEFT,
+				TitledBorder.TOP,new Font(" Courier New",Font.ITALIC,36),Color.black));
+		
+		
+		
+		
 		this.panelMiddle.setLayout(new BorderLayout());
 		this.panelMiddle.add(this.paneStudent);
 		this.panelRight.setLayout(new BorderLayout());
@@ -136,16 +120,11 @@ public class Main extends JFrame implements ActionListener{
 		this.frame.add(this.panelLeft);
 		this.frame.add(this.panelMiddle);
 		this.frame.add(this.panelRight);
-		this.frame.setJMenuBar(Menu);
 		this.frame.setResizable(true);
 		this.frame.setVisible(true);
 	}
 	public static void main(String args[]) {
 			new Main();
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
 	}
 	
 	public TableModel updateCampusList(){
@@ -177,7 +156,7 @@ public class Main extends JFrame implements ActionListener{
 		
 	}
 
-	public DefaultTableModel updateTeacherList(Campus campusSelected){
+	public TableModel updateTeacherList(Campus campusSelected){
 		List<Teacher> teacherList=DaoUtil.getCampus().getTeachers(campusSelected);
 		String[][] teacher=new String[teacherList.size()][3];
 		for(int i=0;i<teacherList.size();i++){
@@ -191,5 +170,13 @@ public class Main extends JFrame implements ActionListener{
 		System.out.println("---teacherList: "+teacherList.size()+"---");
 		return model;
 		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source=e.getSource();
+		if(source==this.btnAddLeft){
+			
+		}
 	}
 }
