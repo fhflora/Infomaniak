@@ -48,7 +48,7 @@ public class UIModifySalary implements ActionListener {
 		dialogPanel.setLayout(new BorderLayout());
 		dialogPanel.add(this.inputPanel,BorderLayout.CENTER);
 		dialogPanel.add(this.btnPanel,BorderLayout.SOUTH);
-		dialog.setBounds(100, 100, 300, 200);
+		dialog.setBounds(100, 100, 300, 180);
 		dialog.add(dialogPanel);
 		dialog.setVisible(true);
 		}

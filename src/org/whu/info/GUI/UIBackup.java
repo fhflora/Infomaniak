@@ -18,9 +18,11 @@ public class UIBackup implements ActionListener{
 	JPanel dialogPanel;
 	JPanel inputPanel;
 	JPanel inputPathPanel;
+	JPanel TipsPanel;
 	JPanel btnPanel;
 	JTextField txtPath;
 	JLabel lblPath;
+	JLabel lblTip;
 	JButton btnSubmit;
 	JButton btnCancel;
 	String path;
@@ -34,10 +36,14 @@ public class UIBackup implements ActionListener{
 		txtPath=new JTextField();
 		txtPath.setPreferredSize(new Dimension(200,30));
 		this.lblPath=new JLabel("Backup");
+		this.lblTip = new JLabel("for example : C:/XXX.txt");
+		this.TipsPanel=new JPanel();
+		TipsPanel.add(this.lblTip);
 		this.inputPathPanel.add(this.lblPath);
 		this.inputPathPanel.add(this.txtPath);
-		this.inputPanel.setLayout(new GridLayout(1, 1));
+		this.inputPanel.setLayout(new GridLayout(2, 1));
 		this.inputPanel.add(this.inputPathPanel);
+		this.inputPanel.add(this.TipsPanel);
 		
 		
 		this.btnCancel=new JButton("Cancel");
@@ -49,7 +55,7 @@ public class UIBackup implements ActionListener{
 		dialogPanel.setLayout(new BorderLayout());
 		dialogPanel.add(this.inputPanel,BorderLayout.CENTER);
 		dialogPanel.add(this.btnPanel,BorderLayout.SOUTH);
-		dialog.setBounds(100, 100, 300, 200);
+		dialog.setBounds(100, 100, 300, 180);
 		dialog.add(dialogPanel);
 		dialog.setVisible(true);
 		}

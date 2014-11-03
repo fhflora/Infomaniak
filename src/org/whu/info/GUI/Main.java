@@ -69,6 +69,7 @@ public class Main extends JFrame implements ActionListener {
 	UIStudent addStudent;
 	UITeacher addTeacher;
 	UIBackup backup;
+	UIModifySalary ModifySalary;
 	Campus campus = ManageCampus.getAllCampus().get(0);
 
 	public Main() {
@@ -205,14 +206,21 @@ public class Main extends JFrame implements ActionListener {
 	public TableModel updateTeacherList(Campus campusSelected) {
 		List<Teacher> teacherList = DaoUtil.getCampus().getTeachers(
 				campusSelected);
-		String[][] teacher = new String[teacherList.size()][3];
+		String[][] teacher = new String[teacherList.size()][4];
 		for (int i = 0; i < teacherList.size(); i++) {
 			teacher[i][0] = teacherList.get(i).getID() + "";
 			teacher[i][1] = teacherList.get(i).getPrenom();
 			teacher[i][2] = teacherList.get(i).getNom();
+			if (teacherList.get(i) instanceof InternalTeacher) {
+				teacher[i][3] = InternalTeacher.salary + "";
+			} else {
+				ExternalTeacher externalTeacher = (ExternalTeacher) teacherList
+						.get(i);
+				teacher[i][3] = externalTeacher.getSalary() + "";
+			}
 
 		}
-		String[] title = { "ID", "prenom", "nom" };
+		String[] title = { "ID", "prenom", "nom","salary"};
 		DefaultTableModel model = new DefaultTableModel(teacher, title);
 		System.out.println("---teacherList: " + teacherList.size() + "---");
 		return model;
@@ -264,27 +272,27 @@ public class Main extends JFrame implements ActionListener {
 		} else if (source == this.btnAddRight) {
 			if (addTeacher == null) {
 				addTeacher = new UITeacher(this.frame);
-				if (!(addTeacher.getID() + "").equals("")
-						&& !addTeacher.getPrenom().equals("")
-						&& addTeacher.getNom().equals("")) {
-					if (addTeacher.getFlag() == 0) {
-						Teacher newTeacher = new InternalTeacher(
-								addTeacher.getID(), addTeacher.getPrenom(),
-								addTeacher.getNom(), addTeacher.getVille(),
-								addTeacher.getRegion());
-						campus.addTeacher(newTeacher);
-					} else {
-						Teacher newTeacher = new ExternalTeacher(
-								addTeacher.getID(), addTeacher.getPrenom(),
-								addTeacher.getNom(), addTeacher.getVille(),
-								addTeacher.getRegion(), addTeacher.getSalary());
-						campus.addTeacher(newTeacher);
-					}
-				}
-				teacherList.setModel(this.updateTeacherList(campus));
 			} else {
 				addTeacher.setVisible(true);
 			}
+			if (!(addTeacher.getID() + "").equals("")
+					&& !addTeacher.getPrenom().equals("")
+					&& addTeacher.getNom().equals("")) {
+				if (addTeacher.getFlag() == 0) {
+					Teacher newTeacher = new InternalTeacher(
+							addTeacher.getID(), addTeacher.getPrenom(),
+							addTeacher.getNom(), addTeacher.getVille(),
+							addTeacher.getRegion());
+					campus.addTeacher(newTeacher);
+				} else {
+					Teacher newTeacher = new ExternalTeacher(
+							addTeacher.getID(), addTeacher.getPrenom(),
+							addTeacher.getNom(), addTeacher.getVille(),
+							addTeacher.getRegion(), addTeacher.getSalary());
+					campus.addTeacher(newTeacher);
+				}
+			}
+			teacherList.setModel(this.updateTeacherList(campus));
 		} else if (source == this.btnBackupLeft) {
 			if (backup == null) {
 				backup = new UIBackup(this.frame);
@@ -324,7 +332,12 @@ public class Main extends JFrame implements ActionListener {
 			teacherList.setModel(this.updateTeacherList(campus));
 
 		} else if (source == this.btnModRight) {
-
+			if (ModifySalary == null) {
+				ModifySalary = new UIModifySalary(this.frame);
+			} else {
+				ModifySalary.setVisible(true);
+			}
+			InternalTeacher.modifySalary(ModifySalary.getSalary());
 		}
 	}
 }
