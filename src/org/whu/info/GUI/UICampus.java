@@ -91,6 +91,11 @@ public class UICampus implements ActionListener{
 			this.txtRegion.setText("");
 			this.txtCapacite.setText("");
 			this.dialog.setVisible(false);
+		}else if(source==this.btnCancel){
+			this.txtVille.setText("");
+			this.txtRegion.setText("");
+			this.txtCapacite.setText("");
+			this.dialog.setVisible(false);
 		}
 	}
 	

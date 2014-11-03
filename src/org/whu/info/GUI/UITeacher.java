@@ -168,6 +168,14 @@ public class UITeacher implements ActionListener {
 		else if(source==this.ExternalT){
 			this.inputSalaryPanel.setVisible(true);
 			this.flag=1;
+		}else if(source==this.btnCancel){
+			this.txtID.setText("");
+			this.txtPrenom.setText("");
+			this.txtNom.setText("");
+			this.txtVille.setText("");
+			this.txtRegion.setText("");
+			this.txtSalary.setText("");
+			this.dialog.setVisible(false);
 		}
 		
 	}

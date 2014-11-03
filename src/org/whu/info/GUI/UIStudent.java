@@ -118,6 +118,13 @@ public class UIStudent implements ActionListener{
 			this.txtVille.setText("");
 			this.txtRegion.setText("");
 			this.dialog.setVisible(false);
+		}else if(source==this.btnCancel){
+			this.txtID.setText("");
+			this.txtPrenom.setText("");
+			this.txtNom.setText("");
+			this.txtVille.setText("");
+			this.txtRegion.setText("");
+			this.dialog.setVisible(false);
 		}
 	}
 	public int getID() {
