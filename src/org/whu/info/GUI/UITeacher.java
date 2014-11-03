@@ -130,11 +130,13 @@ public class UITeacher implements ActionListener {
 		// TODO Auto-generated method stub
 		Object source = e.getSource();
 		if (source == this.btnSubmit) {
-			this.ID = Integer.parseInt(this.txtID.getText());
-			if(this.txtPrenom.getText().equals("")||this.txtNom.getText().equals("")){
-				this.lblAlert.setText("Please entre a first name or name");
+			
+			if(this.txtPrenom.getText().equals("")||this.txtNom.getText().equals("")||this.txtID.getText().equals("")){
+				this.lblAlert.setText("Please entre all infomations");
+				this.dialog.repaint();
 				return;
 			}
+			this.ID = Integer.parseInt(this.txtID.getText());
 			this.prenom = this.txtPrenom.getText();
 			this.nom = this.txtNom.getText();
 			if(this.flag==1){
