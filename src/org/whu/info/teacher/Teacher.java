@@ -3,7 +3,7 @@ package org.whu.info.teacher;
 import java.io.Serializable;
 
 /**
- * ³éÏóÀà TeacherÀà
+ * abstract class teacher
  * 
  * @author bobo
  *

@@ -8,9 +8,9 @@ import org.whu.info.campus.Campus;
 import org.whu.info.campus.ManageCampus;
 
 /**
- * 对象操作类
+ * manage DAO class
  * 
- * @author bobo
+ * @author fuzhi
  * 
  */
 public class DaoUtil {

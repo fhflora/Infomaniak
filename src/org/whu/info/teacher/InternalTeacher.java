@@ -5,9 +5,9 @@ import java.io.Serializable;
 import org.whu.info.dbutil.DaoUtil;
 
 /**
- * 子类InternalTeacher
+ * subclass of teacher
  * 
- * @author bobo
+ * @author fuzhi
  *
  */
 public class InternalTeacher extends Teacher implements Serializable {
@@ -30,7 +30,7 @@ public class InternalTeacher extends Teacher implements Serializable {
 	}
 
 	/**
-	 * 统一修改内部老师工资
+	 * modify salary of internal teacher
 	 * 
 	 * @param salary
 	 * @return
@@ -42,7 +42,4 @@ public class InternalTeacher extends Teacher implements Serializable {
 		return res;
 	}
 
-	public static void main(String[] args) {
-		modifySalary(20000);
-	}
 }

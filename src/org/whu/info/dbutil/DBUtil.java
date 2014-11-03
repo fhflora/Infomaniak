@@ -12,8 +12,8 @@ import javax.sql.DataSource;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 /**
- * 封装的数据库操作类
- * @author QT
+ * manage database
+ * @author fuzhi
  *
  */
 public class DBUtil {
@@ -29,9 +29,7 @@ public class DBUtil {
         }  
         return null;  
     }  
-	/**
-	 * 函数作用：获取数据库的Statement
-	 */
+
 	public static Statement createStmt(Connection conn) {
 		Statement stmt = null;
 		try {
@@ -42,9 +40,6 @@ public class DBUtil {
 		return stmt;
 	}
 
-	/**
-	 * 函数作用：由stmt跟查询语句sql，获取结果集
-	 */
 	public static ResultSet getRs(Statement stmt, String sql) {
 		ResultSet rs = null;
 		try {
@@ -54,9 +49,7 @@ public class DBUtil {
 		}
 		return rs;
 	}
-	/**
-	 * 函数作用：由stmt执行 查询语句sql，
-	 */
+
 	public static void executeSQL(Statement stmt, String sql)
 			throws SQLException {
 		try {

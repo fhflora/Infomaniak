@@ -14,13 +14,17 @@ import org.whu.info.teacher.InternalTeacher;
 import org.whu.info.teacher.Teacher;
 
 /**
- * 教师表操作类
+ * manage teacher
  * 
  * @author bobo
  *
  */
 public class TeacherDao {
 
+	/**
+	 * get all teachers
+	 * @return
+	 */
 	public List<Teacher> getAllteachers() {
 		List<Teacher> allTeachersList = new ArrayList<Teacher>();
 		Connection conn = DBUtil.getConn();
@@ -48,7 +52,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 添加内部教师到数据表
+	 * add a internal teacher
 	 * 
 	 * @param s
 	 * @return
@@ -74,7 +78,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 添加外部教师
+	 * add aexternal teacher
 	 * 
 	 * @param s
 	 * @return
@@ -100,7 +104,9 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 通过教师ID 删除教师
+	 * remove a teacher
+	 * @param ID
+	 * @return
 	 */
 	public boolean removeTeacher(int ID) {
 		boolean res = false;
@@ -120,7 +126,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 修改内部教师工资
+	 * modify salary of internal teacher
 	 * 
 	 * @param s
 	 * @return
@@ -145,7 +151,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 获得内部教师列表
+	 * get all internal teacher
 	 * 
 	 * @param args
 	 */
@@ -183,7 +189,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 获取校区教师列表
+	 * get all teachers of a campus
 	 * 
 	 * @return
 	 */
@@ -213,9 +219,9 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 获得外部教师列表
-	 * 
-	 * @param args
+	 * get all external teachers of a campus
+	 * @param c
+	 * @return
 	 */
 	public List<ExternalTeacher> getExternalTeachers(Campus c) {
 		List<ExternalTeacher> TeachersList = new ArrayList<ExternalTeacher>();
@@ -251,7 +257,7 @@ public class TeacherDao {
 	}
 
 	/**
-	 * 查询教师是否存在
+	 * check if a teacher exist
 	 * 
 	 * @param t
 	 * @return

@@ -11,14 +11,14 @@ import org.whu.info.campus.Campus;
 import org.whu.info.dbutil.DBUtil;
 
 /**
- * 校区表操作类
+ * manage campus
  * 
- * @author bobo
+ * @author fuzhi
  *
  */
 public class CampusDao {
 	/**
-	 * 获取一个校区
+	 * get a campus
 	 * 
 	 * @param ville
 	 * @param region
@@ -47,7 +47,7 @@ public class CampusDao {
 		return campus;
 	}
 	/**
-	 * 获取校区列表
+	 * get list of campus
 	 * 
 	 * @return
 	 */
@@ -82,7 +82,7 @@ public class CampusDao {
 	}
 
 	/**
-	 * 增加一个campus
+	 * add a campus
 	 */
 	public int addCampus(Campus c) {
 		int res = -1;
@@ -104,7 +104,7 @@ public class CampusDao {
 	}
 
 	/**
-	 * 根据省市判断campus是否存在
+	 * check if the campus exist
 	 * 
 	 * @param c
 	 */
@@ -132,7 +132,7 @@ public class CampusDao {
 	}
 
 	/**
-	 * 查询campus容量操作
+	 * get the capacite of a campus
 	 * 
 	 * @param ville
 	 * @param region
@@ -161,9 +161,10 @@ public class CampusDao {
 	}
 
 	/**
-	 * 更新一个校区学生容量
-	 * 
-	 * @param c
+	 * update the capacite of a campus
+	 * @param ville
+	 * @param region
+	 * @param capacite
 	 * @return
 	 */
 	public boolean updateCampusCapacite(String ville, String region,
@@ -187,10 +188,4 @@ public class CampusDao {
 		return res;
 	}
 
-	public static void main(String args[]) {
-		CampusDao campusDao = new CampusDao();
-		List<Campus> c = new ArrayList<Campus>();
-		c = campusDao.getAllCampus();
-		System.out.println(c.size());
-	}
 }

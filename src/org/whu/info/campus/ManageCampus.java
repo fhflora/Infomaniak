@@ -2,11 +2,7 @@ package org.whu.info.campus;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.whu.info.GUI.Main;
 import org.whu.info.dbutil.DaoUtil;
-import org.whu.info.exception.FullCampusException;
-import org.whu.info.student.Student;
 
 
 public class ManageCampus {
@@ -16,7 +12,7 @@ public class ManageCampus {
 		return Campus;
 	}
 	/**
-	 * 获取校区
+	 * get a campus
 	 */
 	public Campus getCampus(String ville, String region) {
 		Campus campus = new Campus();
@@ -24,7 +20,7 @@ public class ManageCampus {
 		return campus;
 	}
 	/**
-	 * 增加校区
+	 * add a campus
 	 */
 	public boolean addCampus(Campus c) {
 		boolean res = false;

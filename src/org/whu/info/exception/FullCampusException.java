@@ -1,16 +1,13 @@
 package org.whu.info.exception;
 
 /**
- * 异常管理类
+ * full campus Exception
  * 
- * @author bobo
+ * @author fuzhi
  *
  */
 public class FullCampusException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public FullCampusException(String msg) {

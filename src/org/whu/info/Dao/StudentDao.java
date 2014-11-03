@@ -12,15 +12,15 @@ import org.whu.info.dbutil.DBUtil;
 import org.whu.info.student.Student;
 
 /**
- * 学生表操作类
+ * manage student
  * 
- * @author bobo
+ * @author fuzhi
  *
  */
 public class StudentDao {
 
 	/**
-	 * 获取每个校区学生列表
+	 * get student of a campus
 	 * 
 	 * @return
 	 */
@@ -46,7 +46,7 @@ public class StudentDao {
 	}
 
 	/**
-	 * 取表学生列表
+	 * get all students
 	 * 
 	 * @return
 	 */
@@ -97,7 +97,7 @@ public class StudentDao {
 	}
 
 	/**
-	 * 查询表中ID判断是否存在
+	 * check if a ID is exist
 	 * 
 	 * @param s
 	 * @return
@@ -138,7 +138,7 @@ public class StudentDao {
 	}
 
 	/**
-	 * 根据姓名判断是否存在
+	 * check if a student exist
 	 * 
 	 * @param s
 	 * @return
@@ -167,7 +167,7 @@ public class StudentDao {
 	}
 
 	/**
-	 * 添加一条学生记录
+	 * add a student
 	 * 
 	 * @param s
 	 * @return
@@ -193,7 +193,7 @@ public class StudentDao {
 	}
 
 	/**
-	 * 根据姓名删除学生
+	 * remove a student
 	 * 
 	 * @param s
 	 * @return
@@ -216,13 +216,4 @@ public class StudentDao {
 		return res;
 	}
 
-	public static void main(String[] args) {
-		StudentDao studentDao = new StudentDao();
-		Campus c = new Campus();
-		c.setVille("11");
-		c.setRegion("22");
-		List<Student> s = new ArrayList<Student>();
-		s = studentDao.getCampusStudent(c);
-		System.out.println(s.get(0).getPrenom() + " " + s.get(0).getNom());
-	}
 }

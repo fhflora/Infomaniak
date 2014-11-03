@@ -12,9 +12,9 @@ import org.whu.info.teacher.Teacher;
 import edu.princeton.cs.introcs.Out;
 
 /**
- * 数据备份类
+ * class de backup
  * 
- * @author bobo
+ * @author fuzhi
  *
  */
 public class BackupData {
@@ -22,7 +22,7 @@ public class BackupData {
 	
 
 	/**
-	 * 备份校区信息
+	 * Back up le class Campus
 	 * 
 	 * @param filePath
 	 */
@@ -47,7 +47,9 @@ public class BackupData {
 	}
 
 	/**
-	 * 备份学生数据
+	 * back up le class student
+	 * 
+	 * @param filePath
 	 */
 	public void studentsBackup(String filePath) {
 		List<Student> studentsList = new ArrayList<Student>();
@@ -70,7 +72,7 @@ public class BackupData {
 	}
 
 	/**
-	 * 备份老师数据
+	 * Backup le class Teacher
 	 * 
 	 * @param filePath
 	 */

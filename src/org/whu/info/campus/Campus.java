@@ -12,9 +12,7 @@ import org.whu.info.teacher.InternalTeacher;
 import org.whu.info.teacher.Teacher;
 
 public class Campus implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private String ville;
 	private String region;
@@ -53,7 +51,7 @@ public class Campus implements Serializable {
 		this.capacite=capacite;
 	}
 	/**
-	 * 添加一个学生
+	 * add a student to the campus
 	 * 
 	 * @param s
 	 * @return
@@ -82,7 +80,7 @@ public class Campus implements Serializable {
 	}
 
 	/**
-	 * 删除一个学生
+	 * remove a student from a campus
 	 * 
 	 * @param s
 	 * @return
@@ -103,7 +101,7 @@ public class Campus implements Serializable {
 	}
 
 	/**
-	 * 获取全部学生列表
+	 * Get a list of all students
 	 * 
 	 * @return
 	 */
@@ -114,7 +112,7 @@ public class Campus implements Serializable {
 	}
 
 	/**
-	 * 获取校区学生列表
+	 * Get all students of a campus
 	 * 
 	 * @return
 	 */
@@ -124,18 +122,11 @@ public class Campus implements Serializable {
 		return students;
 	}
 
-	public void displayStudent(List<Student> students) {
-		System.out.println("姓" + " " + "名");
-		for (int i = 0; i < students.size(); i++) {
-			System.out.println(students.get(i).getPrenom() + " "
-					+ students.get(i).getNom());
-		}
-	}
 
 	/**
-	 * 添加一个教师
+	 * add a teacher
 	 * 
-	 * @param s
+	 * @param t the new teacher
 	 * @return
 	 */
 	public boolean addTeacher(Teacher t) {
@@ -154,7 +145,7 @@ public class Campus implements Serializable {
 	}
 
 	/**
-	 * 删除一个教师
+	 * remove a teacher
 	 * 
 	 * @param t
 	 * @return
@@ -180,7 +171,7 @@ public class Campus implements Serializable {
 	   }
 
 	/**
-	 * 获取教师列表
+	 * get the list of teachers 
 	 * 
 	 * @return
 	 */
