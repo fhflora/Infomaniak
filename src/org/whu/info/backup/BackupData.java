@@ -19,11 +19,7 @@ import edu.princeton.cs.introcs.Out;
  */
 public class BackupData {
 
-	public static void main(String[] args) {
-		BackupData bk = new BackupData();
-		String filePath = "C:/teacher_bk.txt";
-		bk.teachersBackup(filePath);
-	}
+	
 
 	/**
 	 * 备份校区信息

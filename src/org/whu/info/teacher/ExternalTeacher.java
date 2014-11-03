@@ -17,10 +17,12 @@ public class ExternalTeacher extends Teacher implements Serializable {
 	
 	public ExternalTeacher(){}
 
-	public ExternalTeacher(int ID, String prenom, String nom, int salary) {
+	public ExternalTeacher(int ID, String prenom, String nom, String ville,String region,int salary) {
 		super.ID = ID;
 		super.prenom = prenom;
 		super.nom = nom;
+		super.ville=ville;
+		super.region=region;
 		this.salary = salary;
 	}
 
