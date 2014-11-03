@@ -148,6 +148,7 @@ public class UITeacher implements ActionListener {
 			this.txtPrenom.setText("");
 			this.txtNom.setText("");
 			this.txtSalary.setText("");
+			this.lblAlert.setText("");
 			this.dialog.setVisible(false);
 		}
 		if(source==this.InternalT){

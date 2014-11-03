@@ -94,7 +94,7 @@ public class UIStudent implements ActionListener{
 				this.ID=0;
 			}
 			
-			String txt=this.txtPrenom.getText();
+			//String txt=this.txtPrenom.getText();
 			if(this.txtPrenom.getText().equals("")||this.txtNom.getText().equals("")){
 				this.lblAlert.setText("Please entre a first name or name");
 				return;

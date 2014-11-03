@@ -228,50 +228,58 @@ public class Main extends JFrame implements ActionListener {
 			} else {
 				addCampus.setVisible(true);
 			}
-			if(addCampus.getVille()==null||addCampus.getRegion()==null||addCampus.getCapacite()==0){
+			if (addCampus.getVille() == null || addCampus.getRegion() == null
+					|| addCampus.getCapacite() == 0) {
 				Toolkit.getDefaultToolkit().beep();
-				JOptionPane.showMessageDialog(null, "Please Check input", "Please Check input", JOptionPane.WARNING_MESSAGE);
-			}else{
+				JOptionPane.showMessageDialog(null, "Please Check input",
+						"Please Check input", JOptionPane.WARNING_MESSAGE);
+			} else {
 				Campus newCampus = new Campus(addCampus.getVille(),
 						addCampus.getRegion(), addCampus.getCapacite());
 				DaoUtil.getManageCampus().addCampus(newCampus);
 				campusList.setModel(this.updateCampusList());
 			}
-			
+
 		} else if (source == this.btnAddMiddle) {
 			if (addStudent == null) {
 				addStudent = new UIStudent(this.frame);
 			} else {
 				addStudent.setVisible(true);
 			}
-			if(!addStudent.getPrenom().equals("")&& !addStudent.getNom().equals("")){
-			Student newStudent = new Student(addStudent.getID(),
-					addStudent.getPrenom(), addStudent.getNom(),
-					campus.getVille(), campus.getRegion());
-			boolean resMess = DaoUtil.getCampus().addStudent(newStudent);
-			if (resMess) {
-				studentList.setModel(this.updateStudentList(campus));
-			} else {
-				Toolkit.getDefaultToolkit().beep();
-				JOptionPane.showMessageDialog(null, "The Capacite is Full",
-						"Exception_MESSAGE", JOptionPane.ERROR_MESSAGE);
+			if (!addStudent.getPrenom().equals("")
+					&& !addStudent.getNom().equals("")) {
+				Student newStudent = new Student(addStudent.getID(),
+						addStudent.getPrenom(), addStudent.getNom(),
+						campus.getVille(), campus.getRegion());
+				boolean resMess = DaoUtil.getCampus().addStudent(newStudent);
+				if (resMess) {
+					studentList.setModel(this.updateStudentList(campus));
+				} else {
+					Toolkit.getDefaultToolkit().beep();
+					JOptionPane.showMessageDialog(null, "The Capacite is Full",
+							"Exception_MESSAGE", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			}
-			
+
 		} else if (source == this.btnAddRight) {
 			if (addTeacher == null) {
 				addTeacher = new UITeacher(this.frame);
-				if (addTeacher.getFlag() == 0) {
-					Teacher newTeacher = new InternalTeacher(
-							addTeacher.getID(), addTeacher.getPrenom(),
-							addTeacher.getNom(), addTeacher.getVille(),
-							addTeacher.getRegion());
-					campus.addTeacher(newTeacher);
-				}else{
-					Teacher newTeacher = new ExternalTeacher(
-							addTeacher.getID(), addTeacher.getPrenom(),
-							addTeacher.getNom(), addTeacher.getVille(),addTeacher.getRegion(),addTeacher.getSalary());
-					campus.addTeacher(newTeacher);
+				if (!(addTeacher.getID() + "").equals("")
+						&& !addTeacher.getPrenom().equals("")
+						&& addTeacher.getNom().equals("")) {
+					if (addTeacher.getFlag() == 0) {
+						Teacher newTeacher = new InternalTeacher(
+								addTeacher.getID(), addTeacher.getPrenom(),
+								addTeacher.getNom(), addTeacher.getVille(),
+								addTeacher.getRegion());
+						campus.addTeacher(newTeacher);
+					} else {
+						Teacher newTeacher = new ExternalTeacher(
+								addTeacher.getID(), addTeacher.getPrenom(),
+								addTeacher.getNom(), addTeacher.getVille(),
+								addTeacher.getRegion(), addTeacher.getSalary());
+						campus.addTeacher(newTeacher);
+					}
 				}
 				teacherList.setModel(this.updateTeacherList(campus));
 			} else {
@@ -279,24 +287,24 @@ public class Main extends JFrame implements ActionListener {
 			}
 		} else if (source == this.btnBackupLeft) {
 			if (backup == null) {
-				backup =new UIBackup(this.frame);
-			}else{
+				backup = new UIBackup(this.frame);
+			} else {
 				backup.setVisible(true);
 			}
 			DaoUtil.getBackupData().campusBackup(backup.getPath());
 
 		} else if (source == this.btnBackupMiddle) {
 			if (backup == null) {
-				backup =new UIBackup(this.frame);
-			}else{
+				backup = new UIBackup(this.frame);
+			} else {
 				backup.setVisible(true);
 			}
 			DaoUtil.getBackupData().studentsBackup(backup.getPath());
 
 		} else if (source == this.btnBackupRight) {
 			if (backup == null) {
-				backup =new UIBackup(this.frame);
-			}else{
+				backup = new UIBackup(this.frame);
+			} else {
 				backup.setVisible(true);
 			}
 			DaoUtil.getBackupData().teachersBackup(backup.getPath());
@@ -310,8 +318,8 @@ public class Main extends JFrame implements ActionListener {
 			studentList.setModel(this.updateStudentList(campus));
 
 		} else if (source == this.btnDelRight) {
-			int selectRow=teacherList.getSelectedRow();
-			int ID=(Integer) teacherList.getValueAt(selectRow,1);
+			int selectRow = teacherList.getSelectedRow();
+			int ID = (Integer) teacherList.getValueAt(selectRow, 1);
 			DaoUtil.getTeacherDao().removeTeacher(ID);
 			teacherList.setModel(this.updateTeacherList(campus));
 
