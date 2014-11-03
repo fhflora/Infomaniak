@@ -18,15 +18,12 @@ public class UIStudent implements ActionListener{
 	JPanel inputIDPanel;
 	JPanel inputPrenomPanel;
 	JPanel inputNomPanel;
-	JPanel inputVillePanel;
-	JPanel inputRegionPanel;
+	JPanel alertPanel;
 	JPanel btnPanel;
 	JTextField txtID;
 	JTextField txtPrenom;
 	JTextField txtNom;
-	JTextField txtVille;
-	JTextField txtRegion;
-	
+	JLabel lblAlert;
 	JLabel lblId;
 	JLabel lblPrenom;
 	JLabel lblNom;
@@ -35,15 +32,10 @@ public class UIStudent implements ActionListener{
 	JButton btnSubmit;
 	JButton btnCancel;
 	
+
 	int	   ID;
 	String prenom;
 	String nom;
-	
-
-
-	String ville;
-	String region;
-	
 	
 	UIStudent(JFrame frame){
 		dialog= new JDialog(frame,"Add a new student",true);
@@ -54,41 +46,30 @@ public class UIStudent implements ActionListener{
 		this.inputIDPanel=new JPanel();
 		this.inputPrenomPanel=new JPanel();
 		this.inputNomPanel=new JPanel();
-		this.inputVillePanel=new JPanel();
-		this.inputRegionPanel=new JPanel();
+		this.alertPanel=new JPanel();
 		txtID=new JTextField();
 		txtID.setPreferredSize(new Dimension(200,30));
 		txtPrenom=new JTextField();
 		txtPrenom.setPreferredSize(new Dimension(200,30));
 		txtNom=new JTextField();
 		txtNom.setPreferredSize(new Dimension(200,30));
-		txtVille=new JTextField();
-		txtVille.setPreferredSize(new Dimension(200,30));
-		txtRegion=new JTextField();
-		txtRegion.setPreferredSize(new Dimension(200,30));
 		
 		this.lblId=new JLabel("ID");
 		this.lblPrenom=new JLabel("prenom");
 		this.lblNom=new JLabel("nom");
-		this.lblVille=new JLabel("Ville");
-		this.lblRegion=new JLabel("Region");
 		this.inputIDPanel.add(this.lblId);
 		this.inputIDPanel.add(this.txtID);
 		this.inputPrenomPanel.add(this.lblPrenom);
 		this.inputPrenomPanel.add(this.txtPrenom);
 		this.inputNomPanel.add(this.lblNom);
 		this.inputNomPanel.add(this.txtNom);
-		this.inputVillePanel.add(this.lblVille);
-		this.inputVillePanel.add(this.txtVille);
-		this.inputRegionPanel.add(this.lblRegion);
-		this.inputRegionPanel.add(this.txtRegion);
-		this.inputPanel.setLayout(new GridLayout(5,1));
+		this.lblAlert=new JLabel("");
+		this.alertPanel.add(this.lblAlert);
+		this.inputPanel.setLayout(new GridLayout(4,1));
 		this.inputPanel.add(this.inputIDPanel);
 		this.inputPanel.add(this.inputPrenomPanel);
 		this.inputPanel.add(this.inputNomPanel);
-		this.inputPanel.add(this.inputVillePanel);
-		this.inputPanel.add(this.inputRegionPanel);
-		
+		this.inputPanel.add(this.lblAlert);
 		this.btnCancel=new JButton("Cancel");
 		this.btnSubmit=new JButton("Submit");
         this.btnSubmit.addActionListener(this);
@@ -98,7 +79,7 @@ public class UIStudent implements ActionListener{
 		dialogPanel.setLayout(new BorderLayout());
 		dialogPanel.add(this.inputPanel,BorderLayout.CENTER);
 		dialogPanel.add(this.btnPanel,BorderLayout.SOUTH);
-		dialog.setBounds(100, 100, 400, 300);
+		dialog.setBounds(100, 100, 400, 250);
 		dialog.add(dialogPanel);
 		dialog.setVisible(true);
 	}
@@ -107,23 +88,30 @@ public class UIStudent implements ActionListener{
 		// TODO Auto-generated method stub
 		Object source=e.getSource();
 		if(source==this.btnSubmit){
-			this.ID=Integer.parseInt(this.txtID.getText());
+			if(!this.txtID.getText().equals("")){
+				this.ID=Integer.parseInt(this.txtID.getText());
+			}else{
+				this.ID=0;
+			}
+			
+			String txt=this.txtPrenom.getText();
+			if(this.txtPrenom.getText().equals("")||this.txtNom.getText().equals("")){
+				this.lblAlert.setText("Please entre a first name or name");
+				return;
+			}
+			
 			this.prenom=this.txtPrenom.getText();
-			this.nom=this.txtNom.getText();
-			this.ville=this.txtVille.getText();
-			this.region=this.txtRegion.getText();
+			this.nom=this.txtNom.getText();			
 			this.txtID.setText("");
 			this.txtPrenom.setText("");
 			this.txtNom.setText("");
-			this.txtVille.setText("");
-			this.txtRegion.setText("");
+			this.lblAlert.setText("");
 			this.dialog.setVisible(false);
 		}else if(source==this.btnCancel){
 			this.txtID.setText("");
 			this.txtPrenom.setText("");
 			this.txtNom.setText("");
-			this.txtVille.setText("");
-			this.txtRegion.setText("");
+			this.lblAlert.setText("");
 			this.dialog.setVisible(false);
 		}
 	}
@@ -156,26 +144,6 @@ public class UIStudent implements ActionListener{
 		this.nom = nom;
 	}
 
-
-	public String getVille() {
-		return ville;
-	}
-
-
-	public void setVille(String ville) {
-		this.ville = ville;
-	}
-
-
-	public String getRegion() {
-		return region;
-	}
-
-
-	public void setRegion(String region) {
-		this.region = region;
-	}
-	
 	public void setVisible(boolean visible){
 		this.dialog.setVisible(visible);
 	}

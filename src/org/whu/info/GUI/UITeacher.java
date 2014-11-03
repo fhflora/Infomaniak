@@ -24,24 +24,20 @@ public class UITeacher implements ActionListener {
 	JPanel inputIDPanel;
 	JPanel inputPrenomPanel;
 	JPanel inputNomPanel;
-	JPanel inputVillePanel;
-	JPanel inputRegionPanel;
 	JPanel inputSalaryPanel;// 新添加
+	JPanel alertPanel;
 	JPanel btnPanel;
 	JPanel choosePanel;
 	JTextField txtID;
 	JTextField txtPrenom;
 	JTextField txtNom;
-	JTextField txtVille;
-	JTextField txtRegion;
 	JTextField txtSalary;
 
 	JLabel lblId;
 	JLabel lblPrenom;
 	JLabel lblNom;
-	JLabel lblVille;
-	JLabel lblRegion;
 	JLabel lblSalary;// 新添加
+	JLabel lblAlert;
 
 	JButton btnSubmit;
 	JButton btnCancel;
@@ -71,28 +67,21 @@ public class UITeacher implements ActionListener {
 		this.inputIDPanel = new JPanel();
 		this.inputPrenomPanel = new JPanel();
 		this.inputNomPanel = new JPanel();
-		this.inputVillePanel = new JPanel();
-		this.inputRegionPanel = new JPanel();
 		this.inputSalaryPanel = new JPanel();
-
+		this.alertPanel = new JPanel();
 		txtID = new JTextField();
 		txtID.setPreferredSize(new Dimension(200, 30));
 		txtPrenom = new JTextField();
 		txtPrenom.setPreferredSize(new Dimension(200, 30));
 		txtNom = new JTextField();
 		txtNom.setPreferredSize(new Dimension(200, 30));
-		txtVille = new JTextField();
-		txtVille.setPreferredSize(new Dimension(200, 30));
-		txtRegion = new JTextField();
-		txtRegion.setPreferredSize(new Dimension(200, 30));
 		txtSalary = new JTextField(); // 新添加
 		txtSalary.setPreferredSize(new Dimension(200, 30));
 
 		this.lblId = new JLabel("ID");
 		this.lblPrenom = new JLabel("prenom");
 		this.lblNom = new JLabel("nom");
-		this.lblVille = new JLabel("Ville");
-		this.lblRegion = new JLabel("Region");
+		this.lblAlert=new JLabel("");
 		this.lblSalary = new JLabel("Salary");// 新添加
 
 		this.inputIDPanel.add(this.lblId);
@@ -101,19 +90,15 @@ public class UITeacher implements ActionListener {
 		this.inputPrenomPanel.add(this.txtPrenom);
 		this.inputNomPanel.add(this.lblNom);
 		this.inputNomPanel.add(this.txtNom);
-		this.inputVillePanel.add(this.lblVille);
-		this.inputVillePanel.add(this.txtVille);
-		this.inputRegionPanel.add(this.lblRegion);
-		this.inputRegionPanel.add(this.txtRegion);
+		this.alertPanel.add(this.lblAlert);
 		this.inputSalaryPanel.add(this.lblSalary);
 		this.inputSalaryPanel.add(this.txtSalary);// 新添加
-		this.inputPanel.setLayout(new GridLayout(6, 1));
+		this.inputPanel.setLayout(new GridLayout(5, 1));
 		this.inputPanel.add(this.inputIDPanel);
 		this.inputPanel.add(this.inputPrenomPanel);
 		this.inputPanel.add(this.inputNomPanel);
-		this.inputPanel.add(this.inputVillePanel);
-		this.inputPanel.add(this.inputRegionPanel);
 		this.inputPanel.add(this.inputSalaryPanel);// 新添加
+		this.inputPanel.add(this.alertPanel);
         
 		InternalT = new JRadioButton("Internal");
 		InternalT.addActionListener(this);
@@ -146,18 +131,22 @@ public class UITeacher implements ActionListener {
 		Object source = e.getSource();
 		if (source == this.btnSubmit) {
 			this.ID = Integer.parseInt(this.txtID.getText());
+			if(this.txtPrenom.getText().equals("")||this.txtNom.getText().equals("")){
+				this.lblAlert.setText("Please entre a first name or name");
+				return;
+			}
 			this.prenom = this.txtPrenom.getText();
 			this.nom = this.txtNom.getText();
-			this.ville = this.txtVille.getText();
-			this.region = this.txtRegion.getText();
 			if(this.flag==1){
+				if(this.txtSalary.getText().equals("")){
+					this.salary=0;
+				}else{
 				this.salary = Integer.parseInt(this.txtSalary.getText());// 新添加
+				}
 			}
 			this.txtID.setText("");
 			this.txtPrenom.setText("");
 			this.txtNom.setText("");
-			this.txtVille.setText("");
-			this.txtRegion.setText("");
 			this.txtSalary.setText("");
 			this.dialog.setVisible(false);
 		}
@@ -172,8 +161,6 @@ public class UITeacher implements ActionListener {
 			this.txtID.setText("");
 			this.txtPrenom.setText("");
 			this.txtNom.setText("");
-			this.txtVille.setText("");
-			this.txtRegion.setText("");
 			this.txtSalary.setText("");
 			this.dialog.setVisible(false);
 		}

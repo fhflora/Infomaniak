@@ -244,9 +244,10 @@ public class Main extends JFrame implements ActionListener {
 			} else {
 				addStudent.setVisible(true);
 			}
+			if(!addStudent.getPrenom().equals("")&& !addStudent.getNom().equals("")){
 			Student newStudent = new Student(addStudent.getID(),
 					addStudent.getPrenom(), addStudent.getNom(),
-					addStudent.getVille(), addStudent.getRegion());
+					campus.getVille(), campus.getRegion());
 			boolean resMess = DaoUtil.getCampus().addStudent(newStudent);
 			if (resMess) {
 				studentList.setModel(this.updateStudentList(campus));
@@ -254,6 +255,7 @@ public class Main extends JFrame implements ActionListener {
 				Toolkit.getDefaultToolkit().beep();
 				JOptionPane.showMessageDialog(null, "The Capacite is Full",
 						"Exception_MESSAGE", JOptionPane.ERROR_MESSAGE);
+			}
 			}
 			
 		} else if (source == this.btnAddRight) {
