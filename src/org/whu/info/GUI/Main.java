@@ -112,13 +112,7 @@ public class Main extends JFrame implements ActionListener {
 		this.paneCampus = new JScrollPane(campusList);
 		this.campusList.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int selectedRow = campusList.getSelectedRow();
-				String ville = (String) campusList.getValueAt(selectedRow, 0);
-				String region = (String) campusList.getValueAt(selectedRow, 1);
-				campus = DaoUtil.getManageCampus().getCampus(ville, region);
-				studentList.setModel(updateStudentList(campus));
-				teacherList.setModel(updateTeacherList(campus));
-				System.out.println(ville + region);
+				 createAction();
 			}
 		});
 
@@ -127,7 +121,7 @@ public class Main extends JFrame implements ActionListener {
 		this.paneStudent = new JScrollPane(studentList);
 
 		this.panelRight = new JPanel();
-		teacherList = new JTable(this.updateStudentList(campus));
+		teacherList = new JTable(this.updateTeacherList(campus));
 		this.paneTeacher = new JScrollPane(teacherList);
 
 		this.panelLeft.setLayout(new BorderLayout());
@@ -167,6 +161,22 @@ public class Main extends JFrame implements ActionListener {
 		this.frame.add(this.panelRight);
 		this.frame.setResizable(true);
 		this.frame.setVisible(true);
+	}
+	private void createAction() {
+		Runnable runnable = new Runnable() {
+			public void run() {
+				System.out.println("ThreadID-->"
+						+ Thread.currentThread().getId());
+				int selectedRow = campusList.getSelectedRow();
+				String ville = (String) campusList.getValueAt(selectedRow, 0);
+				String region = (String) campusList.getValueAt(selectedRow, 1);
+				campus = DaoUtil.getManageCampus().getCampus(ville, region);
+				studentList.setModel(updateStudentList(campus));
+				teacherList.setModel(updateTeacherList(campus));
+				System.out.println(ville + region);
+			}
+		};
+		new Thread(runnable).start();
 	}
 
 	public static void main(String args[]) {
